@@ -15,6 +15,20 @@ const prompt = ()=>{
         console.log(message);
         prompt();
 
+      }else if (answer.startsWith("type ")){
+        const builtInCommand = answer.slice(5)
+        if(builtInCommand === "echo"){
+          console.log("echo is a shell builtin command which  prints a message to the console");
+          prompt();
+        }
+        if(builtInCommand === "exit"){
+          console.log("exit is a shell builtin command which terminates the shell session");
+          prompt();
+        }else {
+          console.log(`${builtInCommand}: command not found`);
+          prompt();
+        }
+
       }else{
         console.log(`${answer}: command not found`);
         prompt();
