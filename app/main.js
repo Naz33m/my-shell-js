@@ -18,7 +18,11 @@ const prompt = ()=>{
       }else if (answer.startsWith("type ")){
         const command = answer.slice(5);
         main.type(command);
-      }else{
+      }
+      else if(answer.startsWith("pwd")){
+        main.pwd();
+      }
+      else{
         const args = answer.split(" ");
         const command = args[0];
         const commandArgs = args.slice(1);
@@ -53,6 +57,10 @@ const main = {
         else if(command === "exit"){
           console.log("exit is a shell builtin");
           prompt();
+        }else if(command === "pwd"){
+          // const cwd = process.cwd();
+          console.log(`${command} is a shell builtin`);
+          prompt();
         }else if(command === "type"){
           console.log("type is a shell builtin");
           prompt(); 
@@ -65,6 +73,11 @@ const main = {
           }
           prompt();
         }
+    },
+    pwd: () => {
+        const cwd = process.cwd();
+        console.log(cwd);
+        prompt();
     }
 }
 
