@@ -7,9 +7,8 @@ const rl = readline.createInterface({
 
 // Uncomment this block to pass the first stage
 const prompt = ()=>{
-
     rl.question("$ ", (answer) => {
-      if(answer === "exit 0") {
+      if(answer === "exit 0" || answer === "exit") {
         rl.close();
       }else if(answer.startsWith("echo ")){
         const message = answer.slice(5);
@@ -28,12 +27,12 @@ const prompt = ()=>{
           // prompt();
           rl.close();
         }else {
-          console.log(`From inside ${builtInCommand}: command not found`);
+          console.log(`${builtInCommand}: command not found`);
           prompt();
         }
 
       }else{
-        console.log(`From outside ${answer}: command not found`);
+        console.log(`${answer}: command not found`);
         prompt();
       }
       
