@@ -1,5 +1,6 @@
 const readline = require("readline");
 const fs = require("fs");
+const { spawn } = require("child_process");
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -18,8 +19,19 @@ const prompt = ()=>{
         const command = answer.slice(5);
         main.type(command);
       }else{
-        console.log(`${answer}: command not found`);
-        prompt();
+        const args = answer.split(" ");
+        const command = args[0];
+        const commandArgs = args.slice(1);
+        const executablePath = findExecutable(command);
+        if(executablePath){
+          const child = spawn(executablePath, commandArgs, { stdio: "inherit", argv0: command });
+          child.on("exit", () => {
+            prompt();
+          });
+        }else{
+          console.log(`${answer}: command not found`);
+          prompt();
+        }
       }
       
     });
@@ -45,28 +57,31 @@ const main = {
           console.log("type is a shell builtin");
           prompt(); 
         }else {
-          const paths = process.env.PATH.split(":");
-          let found = false;
-          for (const path of paths) {
-            const filePath = `${path}/${command}`;
-            if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-              try {
-                fs.accessSync(filePath,fs.constants.X_OK)
-                console.log(`${command} is ${filePath}`);
-                found = true;
-                break;
-              } catch (error) {
-                continue
-              }
-            }
-          }
-          if (!found) {
-            console.log(`${command}: not found`);
+          const executablePath = findExecutable(command);
+          if(executablePath){
+            console.log(`${command} is ${executablePath}`);
+          }else{
+            console.log(`${command} not found`);
           }
           prompt();
         }
     }
 }
 
+const findExecutable = (command) =>{
+  const paths = process.env.PATH.split(":");
+  for (const path of paths) {
+    const filePath = `${path}/${command}`;
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      try {
+        fs.accessSync(filePath,fs.constants.X_OK)
+        return filePath;
+      } catch (error) {
+        continue
+      }
+    }
+  }
+  return null;  
+}
 
 prompt()
