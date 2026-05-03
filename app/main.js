@@ -7,6 +7,7 @@ const rl = readline.createInterface({
 
 // Uncomment this block to pass the first stage
 const prompt = ()=>{
+
     rl.question("$ ", (answer) => {
       if(answer === "exit 0") {
         rl.close();
@@ -23,14 +24,16 @@ const prompt = ()=>{
         }
         if(builtInCommand === "exit"){
           console.log("exit is a shell builtin command which terminates the shell session");
-          prompt();
+
+          // prompt();
+          rl.close();
         }else {
-          console.log(`${builtInCommand}: command not found`);
+          console.log(`From inside ${builtInCommand}: command not found`);
           prompt();
         }
 
       }else{
-        console.log(`${answer}: command not found`);
+        console.log(`From outside ${answer}: command not found`);
         prompt();
       }
       
