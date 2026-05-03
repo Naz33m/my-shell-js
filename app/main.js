@@ -18,16 +18,19 @@ const prompt = ()=>{
       }else if (answer.startsWith("type ")){
         const builtInCommand = answer.slice(5)
         if(builtInCommand === "echo"){
-          console.log("echo is a shell builtin command which  prints a message to the console");
+          console.log("echo is a shell builtin");
           prompt();
         }
-        if(builtInCommand === "exit"){
-          console.log("exit is a shell builtin command which terminates the shell session");
+        else if(builtInCommand === "exit"){
+          console.log("exit is a shell builtin");
 
-          // prompt();
-          rl.close();
-        }else {
-          console.log(`${builtInCommand}: command not found`);
+          prompt();
+        }else if(builtInCommand === "type"){
+          console.log("type is a shell builtin");
+          prompt();
+        }
+        else {
+          console.log(`${builtInCommand}: not found`);
           prompt();
         }
 
