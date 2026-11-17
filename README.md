@@ -1,3 +1,10 @@
+# my-shell-js
+
+A POSIX-style shell written from scratch in Node.js for the CodeCrafters "Build Your Own Shell" challenge: a REPL, builtins (`echo`, `exit`, `type`, `pwd`) and running external programs from `PATH`.
+
+---
+
+
 [![progress-banner](https://backend.codecrafters.io/progress/shell/8d25e901-710a-4a35-999e-5e84fda0bc16)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
 
 This is a starting point for JavaScript solutions to the
